@@ -19,14 +19,14 @@ type Post struct {
 };
 
 type CreatePostRequest struct {
-	
-	UserId string;
-	data string;
+
+	Post Post;
 }
 
 type CreatePostResponse struct {
 
-	PostId string
+	PostId string;
+	Created bool;
 }
 
 type PostService struct {}
@@ -37,6 +37,7 @@ func (s * PostService) CreatePost(
 ) (* CreatePostResponse, error) {
 
 	return &CreatePostResponse{
-		PostId: "12345",
+		PostId: req.Post.ID,
+		Created: true,
 	}, nil
 }
