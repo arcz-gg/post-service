@@ -1,0 +1,24 @@
+syntax = "proto3";
+option go_package = "github.com/Arczz.gg/proto/post.proto";
+
+package postservice;
+
+message Post {
+  string id = 1;
+  string user_id = 2;
+  string text = 3;
+  string date_created = 4;
+}
+
+message CreatePostRequest {
+  Post post = 1;
+}
+
+message CreatePostResponse {
+  string post_id = 1;
+  bool created = 2;
+}
+
+service PostService {
+  rpc CreatePost(CreatePostRequest) returns (CreatePostResponse) {}
+}
