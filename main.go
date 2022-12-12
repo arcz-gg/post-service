@@ -21,7 +21,9 @@ func main() {
 	isError(err);
 	
 	server := grpc.NewServer(grpc.MaxConcurrentStreams(100));
-	post_proto.RegisterPostServiceServer(server, &postservices.PostServiceDescriptor{});
+	service := &postservices.PostService{};
+
+	post_proto.RegisterPostServiceServer(server, service);
 	
 	log.Printf("[SERVER]: Server started at port localhost%s", port)
 	if err := server.Serve(ln); err != nil {
