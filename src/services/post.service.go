@@ -2,14 +2,12 @@ package postservices
 
 import (
 	"context"
+	"log"
 
-	_ "google.golang.org/grpc"
 	"github.com/Arcz.gg/post-service/proto"
+	"github.com/google/uuid"
+	_ "google.golang.org/grpc"
 )
-
-type PostServiceDescriptor struct {
-	post_proto.UnimplementedPostServiceServer
-}
 
 type Post struct {
 	ID string;
@@ -20,7 +18,7 @@ type Post struct {
 
 type CreatePostRequest struct {
 
-	Post Post;
+	Post *Post;
 }
 
 type CreatePostResponse struct {
@@ -29,15 +27,30 @@ type CreatePostResponse struct {
 	Created bool;
 }
 
-type PostService struct {}
+type PostService struct {
+	post_proto.UnimplementedPostServiceServer
+}
 
-func (s * PostService) CreatePost(
-	ctx *context.Context, 
-	req *CreatePostRequest,
-) (* CreatePostResponse, error) {
+func (s *PostService) CreatePost(
+	ctx context.Context, 
+	req *post_proto.CreatePostRequest,
+) (*post_proto.CreatePostResponse, error) {
+	
+	data := req.GetPost();
+	log.Println("[LOG]: ", data);
 
-	return &CreatePostResponse{
-		PostId: req.Post.ID,
+	id, err := uuid.NewRandom();
+	if err != nil {
+
+		return nil, err;
+	}
+
+	log.Println("[LOG]: New UUID Generated ", id);
+
+	res := &post_proto.CreatePostResponse{
+		PostId: data.Id,
 		Created: true,
-	}, nil
+	}
+
+	return res, nil;
 }
