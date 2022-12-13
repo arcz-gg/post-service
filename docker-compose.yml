@@ -1,0 +1,19 @@
+version: '3.5'
+
+services:
+  
+  cacheService:
+    image: bitnami/redis:latest
+    restart: on-failure
+    volumes:
+      - './.docker/data/cache:/data/cache'
+    ports:
+      - ${REDIS_PORT}:${REDIS_PORT}
+    environment:
+      - REDIS_REPLICATION_MODE=master
+      - ALLOW_EMPTY_PASSWORD=yes
+      - REDIS_DISABLE_COMMANDS=FLUSHDB,FLUSHALL,CONFIG
+      - REDIS_PORT_NUMBER=${REDIS_PORT}
+
+volumes:
+  data:
