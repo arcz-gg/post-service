@@ -18,6 +18,7 @@ type Post struct {
 };
 
 type PostService struct {
+
 	post_proto.UnimplementedPostServiceServer;
 	Stores store.PostStorage;
 }
@@ -27,7 +28,7 @@ func (s *PostService) CreatePost(
 	req *post_proto.CreatePostRequest,
 ) (*post_proto.CreatePostResponse, error) {
 	
-	data := req.GetPost(); 
+	data := req.GetPost();
 
 	id := data.GetUserId() + "-evt-" + utils.GenId(6);
 	data.Id = id;
@@ -42,5 +43,6 @@ func (s *PostService) CreatePost(
 		log.Println(err);
 		return nil, err;
 	}
+
 	return res, nil;
 }
