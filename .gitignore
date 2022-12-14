@@ -15,3 +15,7 @@
 # vendor/
 
 bin/post-service
+certifs/client_key.pem
+certifs/server_key.pem
+.env
+.env.dev
