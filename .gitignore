@@ -17,3 +17,5 @@
 bin/*
 .env.dev
 .env
+
+certifs/*.pem
